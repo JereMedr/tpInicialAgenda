@@ -15,7 +15,7 @@ public class Conexion
 	{
 		try
 		{
-			Class.forName("com.mysql.jdbc.Driver"); // comentario jere
+			Class.forName("com.mysql.jdbc.Driver"); // comentario prueba branch no borrado
 			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/agenda","root","root");
 			this.connection.setAutoCommit(false);
 			log.info("Conexión exitosa");
