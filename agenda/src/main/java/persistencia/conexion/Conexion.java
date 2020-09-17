@@ -1,5 +1,5 @@
 package persistencia.conexion;
-
+ 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,8 +15,8 @@ public class Conexion
 	{
 		try
 		{
-			Class.forName("com.mysql.jdbc.Driver"); // quitar si no es necesario
-			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/agenda?useSSL=false","root","root");//usar ?useSSL=false
+			Class.forName("com.mysql.jdbc.Driver"); // comentario prueba branch no borrado
+			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/agenda","root","root");
 			this.connection.setAutoCommit(false);
 			log.info("Conexión exitosa");
 		}
