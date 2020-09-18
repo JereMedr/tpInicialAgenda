@@ -20,11 +20,17 @@ public class PersonaDTO
 	private String telefono;
 	
 
-	public PersonaDTO(int idPersona, String nombre, String telefono)
+	public PersonaDTO(int idPersona, String nombre, String telefono,String calle,Integer altura,
+			Integer piso,String departamento,int idLocalidad)
 	{
 		this.idPersona = idPersona;
 		this.nombre = nombre;
 		this.telefono = telefono;
+		this.calle = calle;
+		this.altura = altura;
+		this.piso = piso;
+		this.departamento = departamento;
+		this.idLocalidad = idLocalidad;
 	}
 	
 	public int getIdPersona() 

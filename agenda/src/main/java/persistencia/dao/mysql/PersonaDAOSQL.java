@@ -16,7 +16,7 @@ public class PersonaDAOSQL implements PersonaDAO
 	private static final String insert = "INSERT INTO personas(idPersona, nombre, telefono) VALUES(?, ?, ?)";
 	private static final String delete = "DELETE FROM personas WHERE idPersona = ?";
 	private static final String readall = "SELECT * FROM personas";
-		
+	private static final String update = "UPDATE personas SET nombre=?,telefono=?,calle=?,altura=?,piso=?,departamento=?,idlocalidad=(select idLocalidad from localidad where localidad = ?),correo=?,fecha_nacimiento=?,idTipoContacto=(select idtipocontacto from tipo_contacto where tipo_contacto = ?),apellido=? WHERE idPersona = ?";
 	public boolean insert(PersonaDTO persona)
 	{
 		PreparedStatement statement;
@@ -28,6 +28,7 @@ public class PersonaDAOSQL implements PersonaDAO
 			statement.setInt(1, persona.getIdPersona());
 			statement.setString(2, persona.getNombre());
 			statement.setString(3, persona.getTelefono());
+			statement.setString(3, persona.getCalle());
 			if(statement.executeUpdate() > 0)
 			{
 				conexion.commit();
@@ -96,6 +97,32 @@ public class PersonaDAOSQL implements PersonaDAO
 		int id = resultSet.getInt("idPersona");
 		String nombre = resultSet.getString("Nombre");
 		String tel = resultSet.getString("Telefono");
-		return new PersonaDTO(id, nombre, tel);
+		Integer calle =new Integer (resultSet.getInt("Calle"));
+		Integer altura = new Integer(resultSet.getInt("Altura"));
+		String piso = resultSet.getString("Piso");
+		String depto = resultSet.getString("Departamento");
+		Integer localidad = resultSet.getInt("idLocalidad");
+		return new PersonaDTO(id, nombre, tel, piso,altura,calle,depto,localidad);
+	}
+	
+	public boolean update(PersonaDTO persona) {
+		PreparedStatement statement;
+		int chequeoUpdate = 0;
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(update);
+			statement.setString(1, persona.getNombre());
+			statement.setString(2, persona.getTelefono());
+			statement.setString(3, persona.getCalle());
+			statement.setInt(4, persona.getAltura());
+			
+			chequeoUpdate = statement.executeUpdate();
+			if(chequeoUpdate > 0) //Si se ejecutó devuelvo true
+				return true;
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
