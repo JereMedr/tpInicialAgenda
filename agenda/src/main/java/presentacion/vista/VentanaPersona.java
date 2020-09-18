@@ -13,6 +13,8 @@ public class VentanaPersona extends JFrame
 	private JPanel contentPane;
 	private JTextField txtNombre;
 	private JTextField txtTelefono;
+	private JTextField txtApellido;
+	private JTextField txtCalle;
 	private JButton btnAgregarPersona;
 	private static VentanaPersona INSTANCE;
 	
@@ -51,6 +53,10 @@ public class VentanaPersona extends JFrame
 		lblTelfono.setBounds(10, 52, 113, 14);
 		panel.add(lblTelfono);
 		
+		JLabel lblCalle = new JLabel("Calle");
+		lblCalle.setBounds(10, 52, 113, 14);
+		panel.add(lblCalle);
+		
 		txtNombre = new JTextField();
 		txtNombre.setBounds(133, 8, 164, 20);
 		panel.add(txtNombre);
@@ -60,6 +66,11 @@ public class VentanaPersona extends JFrame
 		txtTelefono.setBounds(133, 49, 164, 20);
 		panel.add(txtTelefono);
 		txtTelefono.setColumns(10);
+		
+		txtCalle = new JTextField();
+		txtCalle.setBounds(133, 49, 164, 20);
+		panel.add(txtCalle);
+		txtCalle.setColumns(10);
 		
 		btnAgregarPersona = new JButton("Agregar");
 		btnAgregarPersona.setBounds(208, 92, 89, 23);
@@ -86,6 +97,14 @@ public class VentanaPersona extends JFrame
 	public JButton getBtnAgregarPersona() 
 	{
 		return btnAgregarPersona;
+	}
+
+	public JTextField getTxtApellido() {
+		return txtApellido;
+	}
+
+	public void setTxtApellido(JTextField txtApellido) {
+		this.txtApellido = txtApellido;
 	}
 
 	public void cerrar()
