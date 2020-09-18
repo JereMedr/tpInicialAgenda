@@ -152,16 +152,6 @@ public class VentanaPersona extends JFrame
 		
 		this.setVisible(false);
 	}
-	
-	public JPanel getContentPane() {
-		return contentPane;
-	}
-
-
-	public void setContentPane(JPanel contentPane) {
-		this.contentPane = contentPane;
-	}
-
 
 	public JTextField getTextEmail() {
 		return textEmail;
