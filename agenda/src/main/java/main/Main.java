@@ -8,7 +8,7 @@ import presentacion.vista.Vista;
 
 public class Main 
 {
-	//main
+
 	public static void main(String[] args) 
 	{
 		Vista vista = new Vista();

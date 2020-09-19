@@ -12,11 +12,14 @@ import persistencia.dao.interfaz.PersonaDAO;
 import dto.PersonaDTO;
 
 public class PersonaDAOSQL implements PersonaDAO
-{
-	private static final String insert = "INSERT INTO personas(idPersona, nombre, telefono) VALUES(?, ?, ?)";
+{																							//Modificado acaaa!!!!
+	private static final String insert = "INSERT INTO personas(idPersona, Nombre, Telefono, Email, Calle, Altura, Piso, Depto) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM personas WHERE idPersona = ?";
 	private static final String readall = "SELECT * FROM personas";
-		
+	private static final String update = "UPDATE personas SET Nombre=?,Telefono=?,Email=?,Calle=?,Altura=?,Piso=?,Depto=? WHERE idPersona = ?";
+//	private static final String update = "UPDATE personas SET nombre=?,telefono=?,email=?,calle=?,altura=?,piso=?,depto=?,idlocalidad=(select idLocalidad from localidad where localidad = ?),correo=?,fecha_nacimiento=?,idTipoContacto=(select idtipocontacto from tipo_contacto where tipo_contacto = ?),apellido=? WHERE idPersona = ?";
+//	private static final String update = "UPDATE personas SET Nombre='Marco',Telefono=12345,Email='marco@gmail.com',Calle='San Martin',Altura='777',Piso=3,Depto=1 WHERE idPersona = ?";
+
 	public boolean insert(PersonaDTO persona)
 	{
 		PreparedStatement statement;
@@ -28,6 +31,12 @@ public class PersonaDAOSQL implements PersonaDAO
 			statement.setInt(1, persona.getIdPersona());
 			statement.setString(2, persona.getNombre());
 			statement.setString(3, persona.getTelefono());
+			statement.setString(4, persona.getEmail()); //modificado
+			statement.setString(5, persona.getCalle());
+			statement.setInt(6, persona.getAltura());
+			statement.setInt(7, persona.getPiso());
+			statement.setString(8, persona.getDepto());
+			
 			if(statement.executeUpdate() > 0)
 			{
 				conexion.commit();
@@ -91,11 +100,49 @@ public class PersonaDAOSQL implements PersonaDAO
 		return personas;
 	}
 	
+	public boolean update(PersonaDTO persona) {
+		PreparedStatement statement;
+		int chequeoUpdate = 0;
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(update);
+
+			
+//			statement.setString(1, Integer.toString(persona.getIdPersona()));
+			statement.setString(1, persona.getNombre());
+			statement.setString(2, persona.getTelefono());
+			statement.setString(3, persona.getEmail()); //modificado
+			statement.setString(4, persona.getCalle());
+			statement.setInt(5, persona.getAltura());
+			statement.setInt(6, persona.getPiso());
+			statement.setString(7, persona.getDepto());
+//			statement.setInt(1, persona.getIdPersona());
+			
+			chequeoUpdate = statement.executeUpdate();
+			if(chequeoUpdate > 0) //Si se ejecutó devuelvo true
+				return true;
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
+	
+	
+	
 	private PersonaDTO getPersonaDTO(ResultSet resultSet) throws SQLException
 	{
 		int id = resultSet.getInt("idPersona");
 		String nombre = resultSet.getString("Nombre");
 		String tel = resultSet.getString("Telefono");
-		return new PersonaDTO(id, nombre, tel);
+		String email = resultSet.getString("Email"); //modificado
+		String calle = resultSet.getString("Calle");
+		int altura = resultSet.getInt("Altura");
+		int piso = resultSet.getInt("Piso");
+		String depto = resultSet.getString("Depto");
+		
+		return new PersonaDTO(id, nombre, tel, email, calle, altura, piso, depto); //modificado
 	}
 }

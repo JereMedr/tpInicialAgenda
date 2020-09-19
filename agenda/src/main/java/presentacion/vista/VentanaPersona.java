@@ -19,11 +19,11 @@ public class VentanaPersona extends JFrame
 	private JTextField txtTelefono;
 	private JButton btnAgregarPersona;
 	private static VentanaPersona INSTANCE;
-	private JTextField textEmail;
-	private JTextField textDomicilioCalle;
-	private JTextField textDomicilioAltura;
-	private JTextField textDomicilioPiso;
-	private JTextField textDomicilioDepto;
+	private JTextField txtEmail;
+	private JTextField txtDomicilioCalle;
+	private JTextField txtDomicilioAltura;
+	private JTextField txtDomicilioPiso;
+	private JTextField txtDomicilioDepto;
 	private JComboBox comboBoxDomicilioLocalidad;
 	private	JComboBox comboBoxTipoContacto;
 	
@@ -113,30 +113,30 @@ public class VentanaPersona extends JFrame
 		btnAgregarPersona.setBounds(315, 7, 89, 23);
 		panel.add(btnAgregarPersona);
 		
-		textEmail = new JTextField();
-		textEmail.setBounds(105, 64, 164, 20);
-		panel.add(textEmail);
-		textEmail.setColumns(10);
+		txtEmail = new JTextField();
+		txtEmail.setBounds(105, 64, 164, 20);
+		panel.add(txtEmail);
+		txtEmail.setColumns(10);
 		
-		textDomicilioCalle = new JTextField();
-		textDomicilioCalle.setBounds(54, 111, 143, 20);
-		panel.add(textDomicilioCalle);
-		textDomicilioCalle.setColumns(10);
+		txtDomicilioCalle = new JTextField();
+		txtDomicilioCalle.setBounds(54, 111, 143, 20);
+		panel.add(txtDomicilioCalle);
+		txtDomicilioCalle.setColumns(10);
 		
-		textDomicilioAltura = new JTextField();
-		textDomicilioAltura.setBounds(301, 111, 86, 20);
-		panel.add(textDomicilioAltura);
-		textDomicilioAltura.setColumns(10);
+		txtDomicilioAltura = new JTextField();
+		txtDomicilioAltura.setBounds(301, 111, 86, 20);
+		panel.add(txtDomicilioAltura);
+		txtDomicilioAltura.setColumns(10);
 		
-		textDomicilioPiso = new JTextField();
-		textDomicilioPiso.setBounds(54, 147, 40, 20);
-		panel.add(textDomicilioPiso);
-		textDomicilioPiso.setColumns(10);
+		txtDomicilioPiso = new JTextField();
+		txtDomicilioPiso.setBounds(54, 147, 40, 20);
+		panel.add(txtDomicilioPiso);
+		txtDomicilioPiso.setColumns(10);
 		
-		textDomicilioDepto = new JTextField();
-		textDomicilioDepto.setBounds(301, 147, 40, 20);
-		panel.add(textDomicilioDepto);
-		textDomicilioDepto.setColumns(10);
+		txtDomicilioDepto = new JTextField();
+		txtDomicilioDepto.setBounds(301, 147, 40, 20);
+		panel.add(txtDomicilioDepto);
+		txtDomicilioDepto.setColumns(10);
 		
 		comboBoxDomicilioLocalidad = new JComboBox();
 		comboBoxDomicilioLocalidad.setBounds(64, 180, 205, 20);
@@ -182,7 +182,32 @@ public class VentanaPersona extends JFrame
 	{
 		return btnAgregarPersona;
 	}
-
+	
+	public JTextField getTxtEmail() //agregado
+	{
+		return txtEmail;
+	}
+	
+	public JTextField getTxtCalle() //agregado
+	{
+		return txtDomicilioCalle;
+	}
+	
+	public JTextField getTxtDomicilioAltura() //agregado
+	{
+		return txtDomicilioAltura;
+	}
+	
+	public JTextField getTxtDomicilioPiso() //agregado
+	{
+		return txtDomicilioPiso;
+	}
+	
+	public JTextField getTxtDomicilioDepto() //agregado
+	{
+		return txtDomicilioDepto;
+	}
+	
 	public void cerrar()
 	{
 		this.txtNombre.setText(null);
@@ -190,3 +215,4 @@ public class VentanaPersona extends JFrame
 		this.dispose();
 	}
 }
+

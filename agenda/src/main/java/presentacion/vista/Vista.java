@@ -24,8 +24,9 @@ public class Vista
 	private JButton btnAgregar;
 	private JButton btnBorrar;
 	private JButton btnReporte;
+	private JButton btnEditar;
 	private DefaultTableModel modelPersonas;
-	private  String[] nombreColumnas = {"Nombre y apellido","Telefono"};
+	private  String[] nombreColumnas = {"Nombre y apellido","Telefono","Calle","Altura","Piso","Depto"};
 
 	public Vista() 
 	{
@@ -64,7 +65,7 @@ public class Vista
 		btnAgregar.setBounds(10, 228, 89, 23);
 		panel.add(btnAgregar);
 		
-		JButton btnEditar = new JButton("Editar");
+		btnEditar = new JButton("Editar");
 		btnEditar.setBounds(109, 228, 89, 23);
 		panel.add(btnEditar);
 		
@@ -101,7 +102,12 @@ public class Vista
 	{
 		return btnAgregar;
 	}
-
+	
+	public JButton getBtnEditar() 
+	{
+		return btnEditar;
+	}
+	
 	public JButton getBtnBorrar() 
 	{
 		return btnBorrar;
@@ -137,7 +143,11 @@ public class Vista
 		{
 			String nombre = p.getNombre();
 			String tel = p.getTelefono();
-			Object[] fila = {nombre, tel};
+			String calle = p.getCalle();
+			int altura = p.getAltura();
+			int piso = p.getPiso();
+			String depto = p.getDepto();
+			Object[] fila = {nombre, tel, calle, altura, piso, depto};
 			this.getModelPersonas().addRow(fila);
 		}
 		
