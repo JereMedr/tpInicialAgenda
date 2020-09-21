@@ -24,10 +24,11 @@ public class Vista
 	private JButton btnAgregar;
 	private JButton btnBorrar;
 	private JButton btnReporte;
-	private JButton btnEditar;
 	private DefaultTableModel modelPersonas;
-	private  String[] nombreColumnas = {"Nombre y apellido","Telefono","Calle","Altura","Piso","Depto"};
-
+	private  String[] nombreColumnas = {"Id","Nombre y apellido","Telefono","Calle","Altura","Piso","Depto"};
+	private JButton btnActualizar;
+	
+	
 	public Vista() 
 	{
 		super();
@@ -41,6 +42,7 @@ public class Vista
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setTitle("Agenda 2020");
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 434, 262);
@@ -65,10 +67,6 @@ public class Vista
 		btnAgregar.setBounds(10, 228, 89, 23);
 		panel.add(btnAgregar);
 		
-		btnEditar = new JButton("Editar");
-		btnEditar.setBounds(109, 228, 89, 23);
-		panel.add(btnEditar);
-		
 		btnBorrar = new JButton("Borrar");
 		btnBorrar.setBounds(208, 228, 89, 23);
 		panel.add(btnBorrar);
@@ -76,6 +74,10 @@ public class Vista
 		btnReporte = new JButton("Reporte");
 		btnReporte.setBounds(307, 228, 89, 23);
 		panel.add(btnReporte);
+		
+		btnActualizar = new JButton("actualizar");
+		btnActualizar.setBounds(109, 228, 89, 23);
+		panel.add(btnActualizar);
 	}
 	
 	public void show()
@@ -103,11 +105,6 @@ public class Vista
 		return btnAgregar;
 	}
 	
-	public JButton getBtnEditar() 
-	{
-		return btnEditar;
-	}
-	
 	public JButton getBtnBorrar() 
 	{
 		return btnBorrar;
@@ -116,6 +113,10 @@ public class Vista
 	public JButton getBtnReporte() 
 	{
 		return btnReporte;
+	}
+	public JButton getBtnActualizar()
+	{
+		return btnActualizar;
 	}
 	
 	public DefaultTableModel getModelPersonas() 
@@ -141,13 +142,14 @@ public class Vista
 
 		for (PersonaDTO p : personasEnTabla)
 		{
+			int id = p.getIdPersona();
 			String nombre = p.getNombre();
 			String tel = p.getTelefono();
 			String calle = p.getCalle();
 			int altura = p.getAltura();
 			int piso = p.getPiso();
 			String depto = p.getDepto();
-			Object[] fila = {nombre, tel, calle, altura, piso, depto};
+			Object[] fila = {id, nombre, tel, calle, altura, piso, depto};
 			this.getModelPersonas().addRow(fila);
 		}
 		
