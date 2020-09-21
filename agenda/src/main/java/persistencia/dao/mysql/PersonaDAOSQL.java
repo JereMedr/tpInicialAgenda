@@ -98,6 +98,41 @@ public class PersonaDAOSQL implements PersonaDAO
 		return personas;
 	}
 	
+<<<<<<< HEAD
+=======
+	public boolean update(PersonaDTO persona) {
+		PreparedStatement statement;
+		int chequeoUpdate = 0;
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(update);
+
+			
+//			statement.setString(1, Integer.toString(persona.getIdPersona()));
+			statement.setString(1, persona.getNombre());
+			System.out.println(persona.getNombre());
+			statement.setString(2, persona.getTelefono());
+			statement.setString(3, persona.getEmail()); //modificado
+			statement.setString(4, persona.getCalle());
+			statement.setInt(5, persona.getAltura());
+			statement.setInt(6, persona.getPiso());
+			statement.setString(7, persona.getDepto());
+			statement.setInt(8, persona.getIdPersona());
+			
+			chequeoUpdate = statement.executeUpdate();
+			if(chequeoUpdate > 0) //Si se ejecut� devuelvo true
+				return true;
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
+	
+	
+>>>>>>> 5f337e91eddb122c752e1df33a3a2b4b1e573cbd
 	
 	private PersonaDTO getPersonaDTO(ResultSet resultSet) throws SQLException
 	{
