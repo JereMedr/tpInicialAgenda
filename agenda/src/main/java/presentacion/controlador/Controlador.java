@@ -16,6 +16,8 @@ public class Controlador implements ActionListener
 		private List<PersonaDTO> personasEnTabla;
 		private VentanaPersona ventanaPersona; 
 		private Agenda agenda;
+		private boolean modoEdicion;
+		private PersonaDTO personaEditar;
 		
 		public Controlador(Vista vista, Agenda agenda)
 		{
@@ -68,7 +70,9 @@ public class Controlador implements ActionListener
 			int[] filasSeleccionadas = this.vista.getTablaPersonas().getSelectedRows();
 			for (int fila : filasSeleccionadas)
 			{
-				this.agenda.editarPersona(this.personasEnTabla.get(fila));
+				PersonaDTO persona_a_actualizar = this.personasEnTabla.get(fila);
+//				persona_a_actualizar
+				this.agenda.editarPersona(persona_a_actualizar);
 			}
 			
 			this.refrescarTabla();
@@ -88,5 +92,22 @@ public class Controlador implements ActionListener
 
 		@Override
 		public void actionPerformed(ActionEvent e) { }
+
+		public boolean isModoEdicion() {
+			return modoEdicion;
+		}
+
+		public void setModoEdicion(boolean modoEdicion) {
+			this.modoEdicion = modoEdicion;
+		}
+
+		public PersonaDTO getPersonaEditar() {
+			return personaEditar;
+		}
+
+		public void setPersonaEditar(PersonaDTO personaEditar) {
+			this.personaEditar = personaEditar;
+		}
+
 		
 }

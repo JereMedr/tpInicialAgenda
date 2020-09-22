@@ -154,12 +154,6 @@ public class VentanaPersona extends JFrame
 		
 		
 		
-		
-		
-		
-		
-		
-		
 		this.setVisible(false);
 	}
 	
