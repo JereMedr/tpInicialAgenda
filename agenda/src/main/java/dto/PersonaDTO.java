@@ -10,6 +10,8 @@ public class PersonaDTO
 	private int altura;
 	private int piso;
 	private String depto;
+//	private LocalidadDTO localidad ;
+//	private 
 
 	public PersonaDTO(int idPersona, String nombre, String telefono, String email, String calle,int altura,int piso, String depto)//modificado
 	{
@@ -92,4 +94,12 @@ public class PersonaDTO
 	public void setAltura(int altura) {
 		this.altura = altura;
 	}
+
+	@Override
+	public String toString() {
+		return "PersonaDTO [" + idPersona + "," + nombre + "," + telefono + ","+ email + "," + calle + "," + altura + "," + piso + "," + depto + "]";
+	}
+	
+	
+	
 }

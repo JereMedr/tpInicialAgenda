@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JComboBox;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 @SuppressWarnings({ "unchecked", "rawtypes"})
@@ -31,7 +33,7 @@ public class VentanaPersona extends JFrame
 	{
 		if(INSTANCE == null)
 		{
-			INSTANCE = new VentanaPersona(); 	
+			INSTANCE = new VentanaPersona();
 			return new VentanaPersona();
 		}
 		else
@@ -49,7 +51,6 @@ public class VentanaPersona extends JFrame
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 11, 460, 281);
 		contentPane.add(panel);
@@ -100,11 +101,27 @@ public class VentanaPersona extends JFrame
 		panel.add(lblFechaDeCumpleaos);
 		
 		txtNombre = new JTextField();
+		txtNombre.addKeyListener(new KeyAdapter() {//modificado para que solo se puedan ingrear letras
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				char caracter = arg0.getKeyChar();
+				if(!Character.isLetter(caracter) && caracter!=KeyEvent.VK_SPACE)
+					arg0.consume();	
+			}
+		});
 		txtNombre.setBounds(105, 8, 164, 20);
 		panel.add(txtNombre);
 		txtNombre.setColumns(10);
 		
 		txtTelefono = new JTextField();
+		txtTelefono.addKeyListener(new KeyAdapter() {//modificado para que solo se puedan ingresar numero
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				char cadena = arg0.getKeyChar();
+				if(cadena<'0'||cadena>'9')
+					arg0.consume();
+			}
+		});
 		txtTelefono.setBounds(105, 36, 164, 20);
 		panel.add(txtTelefono);
 		txtTelefono.setColumns(10);
@@ -119,16 +136,40 @@ public class VentanaPersona extends JFrame
 		txtEmail.setColumns(10);
 		
 		txtDomicilioCalle = new JTextField();
+		txtDomicilioCalle.addKeyListener(new KeyAdapter() {//modificado solo letras
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char caracter = e.getKeyChar();
+				if(!Character.isLetter(caracter) && caracter!=KeyEvent.VK_SPACE)
+					e.consume();	
+			}
+		});
 		txtDomicilioCalle.setBounds(54, 111, 143, 20);
 		panel.add(txtDomicilioCalle);
 		txtDomicilioCalle.setColumns(10);
 		
 		txtDomicilioAltura = new JTextField();
+		txtDomicilioAltura.addKeyListener(new KeyAdapter() {//solo numeros
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char cadena = e.getKeyChar();
+				if(cadena<'0'||cadena>'9')
+					e.consume();
+			}
+		});
 		txtDomicilioAltura.setBounds(301, 111, 86, 20);
 		panel.add(txtDomicilioAltura);
 		txtDomicilioAltura.setColumns(10);
 		
 		txtDomicilioPiso = new JTextField();
+		txtDomicilioPiso.addKeyListener(new KeyAdapter() {//solo numeros
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char cadena = e.getKeyChar();
+				if(cadena<'0'||cadena>'9')
+					e.consume();
+			}
+		});
 		txtDomicilioPiso.setBounds(54, 147, 40, 20);
 		panel.add(txtDomicilioPiso);
 		txtDomicilioPiso.setColumns(10);
@@ -151,14 +192,18 @@ public class VentanaPersona extends JFrame
 		String[] TipoContacto = {"Trabajo","Familia","Amigos"};//agregar alguno mas	
 		comboBoxTipoContacto.setModel(new DefaultComboBoxModel(TipoContacto));
 		
+<<<<<<< HEAD
 		
 		
 		
+=======
+>>>>>>> c079b26360dc81b8c35299c184e7c3fe30b3f103
 		this.setVisible(false);
 	}
 	
 	public void mostrarVentana()
 	{
+
 		this.setVisible(true);
 	}
 	
@@ -202,10 +247,15 @@ public class VentanaPersona extends JFrame
 		return txtDomicilioDepto;
 	}
 	
-	public void cerrar()
+	public void cerrar()//cierro la ventana agregar y borro lo que escribi antes de agregar.
 	{
 		this.txtNombre.setText(null);
 		this.txtTelefono.setText(null);
+		this.txtEmail.setText(null);
+		this.txtDomicilioCalle.setText(null);
+		this.txtDomicilioAltura.setText(null);
+		this.txtDomicilioPiso.setText(null);
+		this.txtDomicilioDepto.setText(null);
 		this.dispose();
 	}
 }
