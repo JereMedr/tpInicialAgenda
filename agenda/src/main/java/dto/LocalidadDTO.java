@@ -1,16 +1,14 @@
 package dto;
 
 public class LocalidadDTO {
-<<<<<<< HEAD
+	
 	private int id;
 	private String nombre;
 	private ProvinciaDTO provincia;
-	
-}
-=======
+
 	private int idLocalidad;
 	private String nombreLocalidad;
-	private ProvinciaDTO provincia;
+//	private ProvinciaDTO provincia;
 	
 	public LocalidadDTO(int idLocalidad, String Localidad){
 		this.idLocalidad = idLocalidad;
@@ -35,4 +33,4 @@ public class LocalidadDTO {
 
 
 }
->>>>>>> 5f337e91eddb122c752e1df33a3a2b4b1e573cbd
+

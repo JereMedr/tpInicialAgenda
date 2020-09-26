@@ -16,7 +16,7 @@ public class PersonaDAOSQL implements PersonaDAO
 	private static final String insert = "INSERT INTO personas(idPersona, Nombre, Telefono, Email, Calle, Altura, Piso, Depto) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM personas WHERE idPersona = ?";
 	private static final String readall = "SELECT * FROM personas";
-//	private static final String update = "UPDATE personas SET Nombre=?,Telefono=?,Email=?,Calle=?,Altura=?,Piso=?,Depto=? WHERE idPersona = ?";
+	private static final String update = "UPDATE personas SET Nombre=?,Telefono=?,Email=?,Calle=?,Altura=?,Piso=?,Depto=? WHERE idPersona = ?";
 
 	public boolean insert(PersonaDTO persona)
 	{
@@ -98,8 +98,7 @@ public class PersonaDAOSQL implements PersonaDAO
 		return personas;
 	}
 	
-<<<<<<< HEAD
-=======
+
 	public boolean update(PersonaDTO persona) {
 		PreparedStatement statement;
 		int chequeoUpdate = 0;
@@ -129,10 +128,6 @@ public class PersonaDAOSQL implements PersonaDAO
 		return false;
 	}
 	
-	
-	
-	
->>>>>>> 5f337e91eddb122c752e1df33a3a2b4b1e573cbd
 	
 	private PersonaDTO getPersonaDTO(ResultSet resultSet) throws SQLException
 	{
