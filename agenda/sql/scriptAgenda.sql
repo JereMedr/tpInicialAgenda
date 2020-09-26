@@ -5,5 +5,13 @@ CREATE TABLE `personas`
   `idPersona` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(45) NOT NULL,
   `Telefono` varchar(20) NOT NULL,
+  `Email` varchar(20) NOT NULL,
+  `Linkedin` varchar(20) NOT NULL,
+  `Fechacumple` Date NOT NULL,
+  `Calle` varchar(20) NOT NULL,
+  `Altura` int(5) NOT NULL,
+  `Piso` int(3) NOT NULL,
+  `Depto` varchar(3) NOT NULL,
+  `CP` int(3) NOT NULL,
   PRIMARY KEY (`idPersona`)
 );

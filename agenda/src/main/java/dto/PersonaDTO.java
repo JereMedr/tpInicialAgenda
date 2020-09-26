@@ -1,19 +1,26 @@
 package dto;
 
+import java.util.Date;
+
 public class PersonaDTO 
 {
 	private int idPersona;
 	private String nombre;
 	private String telefono;
+	private String linkedin;
 	private String email;//modificado aca
 	private String calle;
 	private int altura;
 	private int piso;
 	private String depto;
+	private Date fecha;
+	private int cp;
+	
+	
 //	private LocalidadDTO localidad ;
 //	private 
 
-	public PersonaDTO(int idPersona, String nombre, String telefono, String email, String calle,int altura,int piso, String depto)//modificado
+	public PersonaDTO(int idPersona, String nombre, String telefono, String email, String linkedin, Date fecha, String calle,int altura,int piso, String depto, int cp)//modificado
 	{
 		this.idPersona = idPersona;
 		this.nombre = nombre;
@@ -23,6 +30,9 @@ public class PersonaDTO
 		this.setAltura(altura);
 		this.setPiso(piso);
 		this.setDepto(depto);
+		this.setLinkedin(linkedin);
+		this.setFecha(fecha);
+		this.setCp(cp);
 	}
 	
 	public int getIdPersona() 
@@ -97,7 +107,31 @@ public class PersonaDTO
 
 	@Override
 	public String toString() {
-		return "PersonaDTO [" + idPersona + "," + nombre + "," + telefono + ","+ email + "," + calle + "," + altura + "," + piso + "," + depto + "]";
+		return "PersonaDTO [" + idPersona + "," + nombre + "," + telefono + ","+ email + ","+ linkedin +","+ calle + "," + altura + "," + piso + "," + depto + "]";
+	}
+
+	public String getLinkedin() {
+		return linkedin;
+	}
+
+	public void setLinkedin(String linkedin) {
+		this.linkedin = linkedin;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public int getCp() {
+		return cp;
+	}
+
+	public void setCp(int cp) {
+		this.cp = cp;
 	}
 	
 	

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import persistencia.conexion.Conexion;
@@ -13,7 +14,7 @@ import dto.PersonaDTO;
 
 public class PersonaDAOSQL implements PersonaDAO
 {																							//Modificado acaaa!!!!
-	private static final String insert = "INSERT INTO personas(idPersona, Nombre, Telefono, Email, Calle, Altura, Piso, Depto) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String insert = "INSERT INTO personas(idPersona, Nombre, Telefono, Email, Linkedin, Fechacumple, Calle, Altura, Piso, Depto, CP) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM personas WHERE idPersona = ?";
 	private static final String readall = "SELECT * FROM personas";
 //	private static final String update = "UPDATE personas SET Nombre=?,Telefono=?,Email=?,Calle=?,Altura=?,Piso=?,Depto=? WHERE idPersona = ?";
@@ -30,10 +31,18 @@ public class PersonaDAOSQL implements PersonaDAO
 			statement.setString(2, persona.getNombre());
 			statement.setString(3, persona.getTelefono());
 			statement.setString(4, persona.getEmail()); //modificado
-			statement.setString(5, persona.getCalle());
-			statement.setInt(6, persona.getAltura());
-			statement.setInt(7, persona.getPiso());
-			statement.setString(8, persona.getDepto());
+			statement.setString(5, persona.getLinkedin());
+
+			Date date = persona.getFecha();//necesario
+			long d = date.getTime();
+			java.sql.Date fecha = new java.sql.Date(d);
+			
+			statement.setDate(6, fecha);
+			statement.setString(7, persona.getCalle());
+			statement.setInt(8, persona.getAltura());
+			statement.setInt(9, persona.getPiso());
+			statement.setString(10, persona.getDepto());
+			statement.setInt(11, persona.getCp());
 			
 			if(statement.executeUpdate() > 0)
 			{
@@ -98,41 +107,6 @@ public class PersonaDAOSQL implements PersonaDAO
 		return personas;
 	}
 	
-<<<<<<< HEAD
-=======
-	public boolean update(PersonaDTO persona) {
-		PreparedStatement statement;
-		int chequeoUpdate = 0;
-		Conexion conexion = Conexion.getConexion();
-		try {
-			statement = conexion.getSQLConexion().prepareStatement(update);
-
-			
-//			statement.setString(1, Integer.toString(persona.getIdPersona()));
-			statement.setString(1, persona.getNombre());
-			System.out.println(persona.getNombre());
-			statement.setString(2, persona.getTelefono());
-			statement.setString(3, persona.getEmail()); //modificado
-			statement.setString(4, persona.getCalle());
-			statement.setInt(5, persona.getAltura());
-			statement.setInt(6, persona.getPiso());
-			statement.setString(7, persona.getDepto());
-			statement.setInt(8, persona.getIdPersona());
-			
-			chequeoUpdate = statement.executeUpdate();
-			if(chequeoUpdate > 0) //Si se ejecut� devuelvo true
-				return true;
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-	
-	
-	
-	
->>>>>>> 5f337e91eddb122c752e1df33a3a2b4b1e573cbd
 	
 	private PersonaDTO getPersonaDTO(ResultSet resultSet) throws SQLException
 	{
@@ -140,11 +114,14 @@ public class PersonaDAOSQL implements PersonaDAO
 		String nombre = resultSet.getString("Nombre");
 		String tel = resultSet.getString("Telefono");
 		String email = resultSet.getString("Email"); //modificado
+		Date fecha = resultSet.getDate("Fechacumple");
 		String calle = resultSet.getString("Calle");
 		int altura = resultSet.getInt("Altura");
 		int piso = resultSet.getInt("Piso");
 		String depto = resultSet.getString("Depto");
+		String linkedin = resultSet.getString("Linkedin");
+		int cp = resultSet.getInt("CP");
 		
-		return new PersonaDTO(id, nombre, tel, email, calle, altura, piso, depto); //modificado
+		return new PersonaDTO(id, nombre, tel, email, linkedin, fecha, calle, altura, piso, depto, cp); //modificado
 	}
 }
