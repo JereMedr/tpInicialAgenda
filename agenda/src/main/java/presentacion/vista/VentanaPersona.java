@@ -200,14 +200,17 @@ public class VentanaPersona extends JFrame
 		comboBoxDomicilioLocalidad.setBounds(106, 215, 158, 20);
 		panel.add(comboBoxDomicilioLocalidad);
 		
-		String[] Localidades = {"Avellaneda","San Miguel","Prueba"};//feo pero es lo que hay(?		
-		comboBoxDomicilioLocalidad.setModel(new DefaultComboBoxModel(Localidades));
+		//aca retorno el combobox
+		
+//		String[] Localidades = {"Avellaneda","San Miguel","Prueba"};//feo pero es lo que hay(?		
+//		comboBoxDomicilioLocalidad.setModel(new DefaultComboBoxModel(Localidades));
 		
 		comboBoxTipoContacto = new JComboBox();
 		comboBoxTipoContacto.setBounds(106, 251, 135, 20);
 		panel.add(comboBoxTipoContacto);
-		String[] TipoContacto = {"Trabajo","Familia","Amigos"};//agregar alguno mas	
-		comboBoxTipoContacto.setModel(new DefaultComboBoxModel(TipoContacto));
+		
+//		String[] TipoContacto = {"Trabajo","Familia","Amigos"};//agregar alguno mas	
+//		comboBoxTipoContacto.setModel(new DefaultComboBoxModel(TipoContacto));
 		
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(445, 35, 89, 23);
@@ -248,7 +251,7 @@ public class VentanaPersona extends JFrame
 		
 		this.setVisible(false);
 	}
-	
+
 	protected void habilitarbtnAgregar() {
 		if(!txtNombre.getText().isEmpty() && !txtTelefono.getText().isEmpty()) {
 			btnAgregarPersona.setEnabled(true);
@@ -343,5 +346,7 @@ public class VentanaPersona extends JFrame
 		btnAgregarPersona.setEnabled(false);//agregado para que el boton no se habilite
 		this.dispose();
 	}
+
+	
 }
 

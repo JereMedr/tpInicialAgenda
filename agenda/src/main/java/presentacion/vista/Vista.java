@@ -2,6 +2,7 @@ package presentacion.vista;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.Date;
@@ -14,6 +15,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import dto.PersonaDTO;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -112,12 +114,18 @@ public class Vista extends JFrame
 //				
 //				view.setVisible(true);
 				
-				JasperReport reporte = null;
+				
 	              
-				URL in = this.getClass().getResource("/reportes/prueba.jasper");
-			   reporte= (JasperReport) JRLoader.loadObject(in);
-               
+//				URL in = this.getClass().getResource("/reportes/prueba.jasper");
+//				reporte= (JasperReport) JRLoader.loadObject(in);
+				
+			   
+			   JasperReport reporte = null;
+			   reporte = (JasperReport) JRLoader.loadObjectFromFile("reportes" + File.separator + "prueba.jrxml");               
                JasperPrint jprint = JasperFillManager.fillReport(reporte, null, conexion);
+               
+//               JasperCompileManager.compileReport("reportes/prueba.jrxml");
+               
                
                JasperViewer view = new JasperViewer(jprint, false);
                

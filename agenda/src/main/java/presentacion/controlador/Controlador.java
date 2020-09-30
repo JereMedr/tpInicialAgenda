@@ -2,16 +2,28 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+
+import com.mysql.jdbc.PreparedStatement;
+
 import modelo.Agenda;
+import persistencia.conexion.Conexion;
 import presentacion.reportes.ReporteAgenda;
 import presentacion.vista.VentanaPersona;
 import presentacion.vista.VentanaPersonaActualizar;
 import presentacion.vista.Vista;
 import dto.PersonaDTO;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class Controlador implements ActionListener {
 	
 	private Vista vista;
@@ -32,13 +44,50 @@ public class Controlador implements ActionListener {
 		this.ventanaPersona = VentanaPersona.getInstance();
 		this.ventanaPersona.getBtnAgregarPersona().addActionListener(p->guardarPersona(p));
 		this.ventanaPersona.getBtnCancelar().addActionListener(p->cancelarCarga(p));
-//		this.ventanaPersonaActualizar = VentanaPersonaActualizar.getInstance();
 		this.ventanaPersonaActualizar =  new VentanaPersonaActualizar (this.vista,true);
 		this.ventanaPersonaActualizar.getBtnAgregarPersona().addActionListener(p->actualizarPersona(p));
 		this.ventanaPersonaActualizar.getBtnCancelar().addActionListener(p->cancelarActualizacion(p));
+		lenarLocalidades(this.ventanaPersona.getComboboxLocalidad());
+		llenarContactos(this.ventanaPersona.getComboboxContacto());
 		this.agenda = agenda;
 	}
 	
+	
+	private void lenarLocalidades(JComboBox comboboxLocalidad) {
+		java.sql.PreparedStatement ps = null;
+		ResultSet rs = null;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		
+		try {
+		String sql = "SELECT * FROM Localidad";
+		ps=conexion.prepareStatement(sql);
+		rs=ps.executeQuery();
+		while(rs.next()) {
+			comboboxLocalidad.addItem(rs.getString("Localidad"));
+		}
+		}catch(SQLException ex) {
+			
+		}
+		
+	}
+
+	private void llenarContactos(JComboBox comboboxContacto) {
+		java.sql.PreparedStatement ps = null;
+		ResultSet rs = null;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		
+		try {
+		String sql = "SELECT * FROM TipoContacto";
+		ps=conexion.prepareStatement(sql);
+		rs=ps.executeQuery();
+		while(rs.next()) {
+			comboboxContacto.addItem(rs.getString("TipoContacto"));
+		}
+		}catch(SQLException ex) {
+			
+		}
+	}
+
 	private void cancelarCarga(ActionEvent p) {
 		this.ventanaPersona.cerrar();
 	}
