@@ -21,6 +21,7 @@ import presentacion.reportes.ReporteAgenda;
 import presentacion.vista.VentanaPersona;
 import presentacion.vista.VentanaPersonaActualizar;
 import presentacion.vista.Vista;
+import presentacion.vista.VistaABMLocalidad;
 import presentacion.vista.VistaABMTipoContacto;
 import dto.PersonaDTO;
 
@@ -33,6 +34,7 @@ public class Controlador implements ActionListener {
 	private VentanaPersonaActualizar ventanaPersonaActualizar;
 	private Agenda agenda;
 	private VistaABMTipoContacto ventanaTipoContacto;
+	private VistaABMLocalidad ventanaLocalidad;
 	
 	
 	public Controlador(Vista vista, Agenda agenda) {
@@ -46,6 +48,9 @@ public class Controlador implements ActionListener {
 		this.ventanaTipoContacto = new VistaABMTipoContacto(this.vista,true);
 		this.vista.getBtnABMTipoContacto().addActionListener(a->ventanaABMTipoContacto(a));//
 //		this.ventanaTipoContacto.getBtnAgregar().addActionListener(a->agregarTipoContacto(a));
+		
+		this.ventanaLocalidad = new VistaABMLocalidad(this.vista,true);
+		this.vista.getBtnABMLocalidad().addActionListener(a->ventanaABMLocalidad(a));//
 		
 		this.ventanaPersona = VentanaPersona.getInstance();
 		this.ventanaPersona.getBtnAgregarPersona().addActionListener(p->guardarPersona(p));
@@ -66,8 +71,6 @@ public class Controlador implements ActionListener {
 		
 		this.agenda = agenda;
 	}
-	
-	
 	
 
 	private void lenarLocalidades(JComboBox comboboxLocalidad) {
@@ -124,6 +127,13 @@ public class Controlador implements ActionListener {
 		this.ventanaTipoContacto.mostrarVentana();
 			
 	}
+	
+	private void ventanaABMLocalidad(ActionEvent a) {
+		this.ventanaLocalidad.setTitle("Localidad");	
+		this.ventanaLocalidad.mostrarVentana();
+		
+	}
+	
 	
 	private void ventanaActualizarPersona(ActionEvent a) {//solo se abre la ventana actualizar si seleccione 1 sola fila en el jtable
 		

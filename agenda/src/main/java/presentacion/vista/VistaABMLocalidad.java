@@ -22,22 +22,22 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 
-public class VistaABMTipoContacto extends JDialog {
+public class VistaABMLocalidad extends JDialog {
 
 	private JPanel contentPane;
-	private JTable tablaTipoContacto;
+	private JTable tablaLocalidad;
 	DefaultTableModel modelTipoContacto;
-	private String[] nombreColumnas = {"Tipo de contacto"};
+	private String[] nombreColumnas = {"Localidad"};
 //	private static VistaABMTipoContacto INSTANCE;
 	private JButton btnAgregar;
 	private JButton btnBorrar;
 	private JButton btnModificar;
-	private JTextField textTipoContactoNuevo;
-	private JTextField textTipoContactoModificado;
-	private JButton btnSeleccionarTipo;
-	private String tipoContactoSeleccionada;//es el tipo que seleccione en la tabla
+	private JTextField textTipoLocalidadNueva;
+	private JTextField textTipoLocalidadModificada;
+	private JButton btnSeleccionarLocalidad;
+	private String localidadSeleccionada;//es el tipo que seleccione en la tabla
 	
-	public VistaABMTipoContacto(java.awt.Frame vista, boolean b) 
+	public VistaABMLocalidad(java.awt.Frame vista, boolean b) 
 	{
 		super(vista,b);
 		
@@ -56,11 +56,11 @@ public class VistaABMTipoContacto extends JDialog {
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {//agregar el tipo a la base
-				String nuevoTipoContacto = textTipoContactoNuevo.getText();
+				String nuevaLocalidad = textTipoLocalidadNueva.getText();
 				
-				agregarTipoContacto(nuevoTipoContacto);
+				agregarTipoContacto(nuevaLocalidad);
 				refrescarTabla();
-				textTipoContactoNuevo.setText(null);
+				textTipoLocalidadNueva.setText(null);
 				habilitarbtnAgregar();
 			}
 
@@ -72,7 +72,7 @@ public class VistaABMTipoContacto extends JDialog {
 		btnBorrar = new JButton("Borrar");
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {//aca borro el tipo a la base
-				int[] filasSeleccionadas = tablaTipoContacto.getSelectedRows();
+				int[] filasSeleccionadas = tablaLocalidad.getSelectedRows();
 				
 				for (int fila : filasSeleccionadas) {
 					PreparedStatement statement;
@@ -80,8 +80,8 @@ public class VistaABMTipoContacto extends JDialog {
 					
 					try 
 					{
-						statement = conexion.prepareStatement("DELETE FROM tipocontacto WHERE TipoContacto = ?");
-						statement.setString(1,(String) tablaTipoContacto.getValueAt(fila, 0));
+						statement = conexion.prepareStatement("DELETE FROM localidad WHERE Localidad = ?");
+						statement.setString(1,(String) tablaLocalidad.getValueAt(fila, 0));
 						if(statement.executeUpdate() > 0)
 						{
 							conexion.commit();
@@ -107,8 +107,8 @@ public class VistaABMTipoContacto extends JDialog {
 				
 				try 
 				{
-					statement = conexion.prepareStatement("DELETE FROM tipocontacto WHERE TipoContacto = ?");
-					statement.setString(1,tipoContactoSeleccionada);
+					statement = conexion.prepareStatement("DELETE FROM localidad WHERE Localidad = ?");
+					statement.setString(1,localidadSeleccionada);
 					if(statement.executeUpdate() > 0)
 					{
 						conexion.commit();
@@ -119,12 +119,12 @@ public class VistaABMTipoContacto extends JDialog {
 					e1.printStackTrace();
 				}
 				
-				String modificarTipoContacto = textTipoContactoModificado.getText();//agrego	
+				String modificarTipoContacto = textTipoLocalidadModificada.getText();//agrego	
 				agregarTipoContacto(modificarTipoContacto);
 				
 				refrescarTabla();
-				textTipoContactoModificado.setText(null);
-				textTipoContactoModificado.setEditable(false);
+				textTipoLocalidadModificada.setText(null);
+				textTipoLocalidadModificada.setEditable(false);
 				btnModificar.setEnabled(false);
 			}
 		});
@@ -143,69 +143,69 @@ public class VistaABMTipoContacto extends JDialog {
 		          return false;
 		       }
 		});
-		tablaTipoContacto = new JTable(modelTipoContacto);
+		tablaLocalidad = new JTable(modelTipoContacto);
 
-		tablaTipoContacto.getTableHeader().setReorderingAllowed(false) ;//NO MOVER COLUMNAS
-		spLocalidades.setViewportView(tablaTipoContacto);
+		tablaLocalidad.getTableHeader().setReorderingAllowed(false) ;//NO MOVER COLUMNAS
+		spLocalidades.setViewportView(tablaLocalidad);
 		
-		textTipoContactoNuevo = new JTextField();
+		textTipoLocalidadNueva = new JTextField();
 		
-		textTipoContactoNuevo.addKeyListener(new KeyAdapter() {//modificado para que solo se puedan ingresar letras
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-				char caracter = arg0.getKeyChar();
-				if(!Character.isLetter(caracter) && caracter!=KeyEvent.VK_SPACE)
-					arg0.consume();	
-			}
+		textTipoLocalidadNueva.addKeyListener(new KeyAdapter() {//modificado para que solo se puedan ingresar letras
+//			@Override
+//			public void keyTyped(KeyEvent arg0) {
+//				char caracter = arg0.getKeyChar();
+//				if(!Character.isLetter(caracter) && caracter!=KeyEvent.VK_SPACE)
+//					arg0.consume();	
+//			}
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				habilitarbtnAgregar();
 			}
 		});
 		
-		textTipoContactoNuevo.setBounds(10, 234, 168, 20);
-		panel.add(textTipoContactoNuevo);
-		textTipoContactoNuevo.setColumns(10);
+		textTipoLocalidadNueva.setBounds(10, 234, 168, 20);
+		panel.add(textTipoLocalidadNueva);
+		textTipoLocalidadNueva.setColumns(10);
 		
-		textTipoContactoModificado = new JTextField();
+		textTipoLocalidadModificada = new JTextField();
 		
-		textTipoContactoModificado.addKeyListener(new KeyAdapter() {//modificado para que solo se puedan ingresar letras
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-				char caracter = arg0.getKeyChar();
-				if(!Character.isLetter(caracter) && caracter!=KeyEvent.VK_SPACE)
-					arg0.consume();	
-			}
+		textTipoLocalidadModificada.addKeyListener(new KeyAdapter() {//modificado para que solo se puedan ingresar letras
+//			@Override
+//			public void keyTyped(KeyEvent arg0) {
+//				char caracter = arg0.getKeyChar();
+//				if(!Character.isLetter(caracter) && caracter!=KeyEvent.VK_SPACE)
+//					arg0.consume();	
+//			}
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				habilitarbtnModificar();
 			}
 		});
 		
-		textTipoContactoModificado.setBounds(305, 249, 159, 20);
-		panel.add(textTipoContactoModificado);
-		textTipoContactoModificado.setColumns(10);
+		textTipoLocalidadModificada.setBounds(305, 249, 159, 20);
+		panel.add(textTipoLocalidadModificada);
+		textTipoLocalidadModificada.setColumns(10);
 
-		textTipoContactoModificado.setEditable(false);
+		textTipoLocalidadModificada.setEditable(false);
 		
-		btnSeleccionarTipo = new JButton("habilitar modificacion");
-		btnSeleccionarTipo.addActionListener(new ActionListener() {
+		btnSeleccionarLocalidad = new JButton("habilitar modificacion");
+		btnSeleccionarLocalidad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(tablaTipoContacto.getSelectedRowCount()==1) {
-					int[] filasSeleccionadas = tablaTipoContacto.getSelectedRows();
+				if(tablaLocalidad.getSelectedRowCount()==1) {
+					int[] filasSeleccionadas = tablaLocalidad.getSelectedRows();
 					btnModificar.setEnabled(true);
-					textTipoContactoModificado.setText((String) tablaTipoContacto.getValueAt(filasSeleccionadas[0], 0));
-					tipoContactoSeleccionada = (String) tablaTipoContacto.getValueAt(filasSeleccionadas[0], 0);
+					textTipoLocalidadModificada.setText((String) tablaLocalidad.getValueAt(filasSeleccionadas[0], 0));
+					localidadSeleccionada = (String) tablaLocalidad.getValueAt(filasSeleccionadas[0], 0);
 
-					textTipoContactoModificado.setEditable(true);
-					System.out.println(tipoContactoSeleccionada);
+					textTipoLocalidadModificada.setEditable(true);
+					System.out.println(localidadSeleccionada);
 				}
 			}
 		});
-		btnSeleccionarTipo.setBounds(305, 210, 159, 23);
-		panel.add(btnSeleccionarTipo);
+		btnSeleccionarLocalidad.setBounds(305, 210, 159, 23);
+		panel.add(btnSeleccionarLocalidad);
 		
-		JLabel lblIngresarNuevoTipo = new JLabel("Ingresar nuevo \r\ntipo de contacto:");
+		JLabel lblIngresarNuevoTipo = new JLabel("Ingresar nueva localidad:");
 		lblIngresarNuevoTipo.setBounds(10, 210, 183, 34);
 		panel.add(lblIngresarNuevoTipo);
 		
@@ -214,7 +214,7 @@ public class VistaABMTipoContacto extends JDialog {
 	
 	public JTable getTablaTipoContacto()
 	{
-		return tablaTipoContacto;
+		return tablaLocalidad;
 	}
 	
 	public DefaultTableModel getModel() {
@@ -259,12 +259,12 @@ public class VistaABMTipoContacto extends JDialog {
 			ArrayList<String> localidades = new ArrayList();
 			
 			try {
-			String sql = "SELECT * FROM tipocontacto";
+			String sql = "SELECT * FROM localidad";
 			ps=conexion.prepareStatement(sql);
 			rs=ps.executeQuery();
 			while(rs.next()) {
 //				comboboxLocalidad.addItem(rs.getString("Localidad"));
-				localidades.add(rs.getString("TipoContacto"));
+				localidades.add(rs.getString("Localidad"));
 			}
 			}catch(SQLException ex) {
 				
@@ -286,7 +286,7 @@ public class VistaABMTipoContacto extends JDialog {
 	
 	
 	protected void habilitarbtnAgregar() {
-		if(!textTipoContactoNuevo.getText().isEmpty()) {
+		if(!textTipoLocalidadNueva.getText().isEmpty()) {
 			btnAgregar.setEnabled(true);
 		}
 		else {
@@ -299,7 +299,7 @@ public class VistaABMTipoContacto extends JDialog {
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		try
 		{
-			statement = conexion.prepareStatement("INSERT INTO tipocontacto (TipoContacto) values(?)");
+			statement = conexion.prepareStatement("INSERT INTO localidad (Localidad) values(?)");
 			statement.setString(1, nuevoTipoContacto);
 			
 			if(statement.executeUpdate() > 0)
@@ -318,7 +318,7 @@ public class VistaABMTipoContacto extends JDialog {
 		}
 	}
 	protected void habilitarbtnModificar() {
-		if(!textTipoContactoModificado.getText().isEmpty()) {
+		if(!textTipoLocalidadModificada.getText().isEmpty()) {
 			btnModificar.setEnabled(true);
 		}
 		else {
