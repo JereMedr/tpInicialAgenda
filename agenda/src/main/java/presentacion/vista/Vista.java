@@ -39,6 +39,8 @@ public class Vista extends JFrame
 	private DefaultTableModel modelPersonas;
 	private  String[] nombreColumnas = {"Nombre y apellido","Telefono","Email","Linkedin","Cumpleaños","Calle","Altura","Piso","Depto","CP"};
 	private JButton btnActualizar;
+	private JButton btnAbmLocalidad;
+	private JButton btnAbmTipoContacto;
 	
 	public Vista() 
 	{
@@ -97,11 +99,11 @@ public class Vista extends JFrame
 		btnActualizar.setBounds(235, 291, 89, 23);
 		panel.add(btnActualizar);
 		
-		JButton btnMiReporte = new JButton("mi reporte");
-		btnMiReporte.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-				Connection conexion = Conexion.getConexion().getSQLConexion();
+//		JButton btnMiReporte = new JButton("mi reporte");
+//		btnMiReporte.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				try {
+//				Connection conexion = Conexion.getConexion().getSQLConexion();
 //				JasperReport mireporte = null;
 //				String path = "C:\\Users\\Marco\\Desktop\\TPACAROMPER\\agenda\\reportes\\prueba.jasper";
 //				
@@ -120,27 +122,35 @@ public class Vista extends JFrame
 //				reporte= (JasperReport) JRLoader.loadObject(in);
 				
 			   
-			   JasperReport reporte = null;
-			   reporte = (JasperReport) JRLoader.loadObjectFromFile("reportes" + File.separator + "prueba.jrxml");               
-               JasperPrint jprint = JasperFillManager.fillReport(reporte, null, conexion);
+//			   JasperReport reporte = null;
+//			   reporte = (JasperReport) JRLoader.loadObjectFromFile("reportes" + File.separator + "prueba.jrxml");               
+//               JasperPrint jprint = JasperFillManager.fillReport(reporte, null, conexion);
                
 //               JasperCompileManager.compileReport("reportes/prueba.jrxml");
                
                
-               JasperViewer view = new JasperViewer(jprint, false);
-               
-               view.setVisible(true);
-				
-				
-				} catch (JRException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-		});
-		btnMiReporte.setBounds(323, 325, 89, 23);
-		panel.add(btnMiReporte);
+//               JasperViewer view = new JasperViewer(jprint, false);
+//               
+//               view.setVisible(true);
+//				
+//				
+//				} catch (JRException e) {
+		
+//					e.printStackTrace();
+//				}
+//				
+//			}
+//		});
+//		btnMiReporte.setBounds(323, 325, 89, 23);
+//		panel.add(btnMiReporte);
+		
+		btnAbmLocalidad = new JButton("ABM Localidad");
+		btnAbmLocalidad.setBounds(153, 325, 122, 23);
+		panel.add(btnAbmLocalidad);
+		
+		btnAbmTipoContacto = new JButton("ABM Tipo contacto");
+		btnAbmTipoContacto.setBounds(372, 325, 122, 23);
+		panel.add(btnAbmTipoContacto);
 	}
 	
 	public void show()
@@ -197,6 +207,13 @@ public class Vista extends JFrame
 		return nombreColumnas;
 	}
 	
+	public JButton getBtnABMLocalidad() {
+		return btnAbmLocalidad;
+	}
+	
+	public JButton getBtnABMTipoContacto() {
+		return btnAbmTipoContacto;
+	}
 
 	public void llenarTabla(List<PersonaDTO> personasEnTabla) {
 		this.getModelPersonas().setRowCount(0); //Para vaciar la tabla

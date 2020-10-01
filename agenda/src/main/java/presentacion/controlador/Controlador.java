@@ -21,6 +21,7 @@ import presentacion.reportes.ReporteAgenda;
 import presentacion.vista.VentanaPersona;
 import presentacion.vista.VentanaPersonaActualizar;
 import presentacion.vista.Vista;
+import presentacion.vista.VistaABMTipoContacto;
 import dto.PersonaDTO;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -31,7 +32,7 @@ public class Controlador implements ActionListener {
 	private VentanaPersona ventanaPersona; 
 	private VentanaPersonaActualizar ventanaPersonaActualizar;
 	private Agenda agenda;
-
+	private VistaABMTipoContacto ventanaTipoContacto;
 	
 	
 	public Controlador(Vista vista, Agenda agenda) {
@@ -41,18 +42,34 @@ public class Controlador implements ActionListener {
 		this.vista.getBtnActualizar().addActionListener(a->ventanaActualizarPersona(a));
 		this.vista.getBtnBorrar().addActionListener(s->borrarPersona(s));
 		this.vista.getBtnReporte().addActionListener(r->mostrarReporte(r));
+		
+		this.ventanaTipoContacto = new VistaABMTipoContacto(this.vista,true);
+		this.vista.getBtnABMTipoContacto().addActionListener(a->ventanaABMTipoContacto(a));//
+//		this.ventanaTipoContacto.getBtnAgregar().addActionListener(a->agregarTipoContacto(a));
+		
 		this.ventanaPersona = VentanaPersona.getInstance();
 		this.ventanaPersona.getBtnAgregarPersona().addActionListener(p->guardarPersona(p));
 		this.ventanaPersona.getBtnCancelar().addActionListener(p->cancelarCarga(p));
 		this.ventanaPersonaActualizar =  new VentanaPersonaActualizar (this.vista,true);
-		this.ventanaPersonaActualizar.getBtnAgregarPersona().addActionListener(p->actualizarPersona(p));
+		this.ventanaPersonaActualizar.getBtnActualizarPersona().addActionListener(p->actualizarPersona(p));
 		this.ventanaPersonaActualizar.getBtnCancelar().addActionListener(p->cancelarActualizacion(p));
 		lenarLocalidades(this.ventanaPersona.getComboboxLocalidad());
 		llenarContactos(this.ventanaPersona.getComboboxContacto());
+		
+		//vistaABMTipocontacto
+//		this.ventanaTipoContacto = ventanaTipoContacto.getInstance();
+	
+//		this.ventanaTip
+//		this.ventanaTipoContacto.getBtnAgregarPersona().addActionListener(p->guardarPersona(p));
+//		this.ventanaTipoContacto.getBtnCancelar().addActionListener(p->cancelarCarga(p));
+		
+		
 		this.agenda = agenda;
 	}
 	
 	
+	
+
 	private void lenarLocalidades(JComboBox comboboxLocalidad) {
 		java.sql.PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -99,6 +116,12 @@ public class Controlador implements ActionListener {
 	private void ventanaAgregarPersona(ActionEvent a) {
 		this.ventanaPersona.setTitle("Agregar contacto");	
 		this.ventanaPersona.mostrarVentana();
+			
+	}
+	
+	private void ventanaABMTipoContacto(ActionEvent a) {
+		this.ventanaTipoContacto.setTitle("Tipo de contacto");	
+		this.ventanaTipoContacto.mostrarVentana();
 			
 	}
 	
@@ -191,7 +214,6 @@ public class Controlador implements ActionListener {
 		Date date = ventanaPersonaActualizar.getDateChooser().getDate();//obtengo la fecha
 		long d = date.getTime();
 		java.sql.Date fecha = new java.sql.Date(d);
-//		System.out.println(fecha);
 		int cp = Integer.parseInt(ventanaPersonaActualizar.getTxtCP().getText());
 		
 		PersonaDTO nuevaPersona = new PersonaDTO(id, nombre, tel, email, linkedin, fecha, calle, altura, piso, depto, cp);	//modificado
@@ -199,12 +221,10 @@ public class Controlador implements ActionListener {
 		System.out.println(ventanaPersonaActualizar.getComboboxLocalidad().getSelectedItem());//obtengo la localidad seleccionada
 
 		
-		
 		this.agenda.agregarPersona(nuevaPersona);
 		this.refrescarTabla();
 		this.ventanaPersonaActualizar.cerrar();
 	}
-	
 	
 	public void inicializar()
 	{
@@ -212,12 +232,13 @@ public class Controlador implements ActionListener {
 		this.vista.show();
 	}
 	
-	
 	private void refrescarTabla()
 	{
 		this.personasEnTabla = agenda.obtenerPersonas();
 		this.vista.llenarTabla(this.personasEnTabla);
 	}
+	
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) { }

@@ -247,7 +247,7 @@ public class VentanaPersonaActualizar extends JDialog
 		return txtTelefono;
 	}
 
-	public JButton getBtnAgregarPersona() 
+	public JButton getBtnActualizarPersona() 
 	{
 		return btnActualizarPersona;
 	}
