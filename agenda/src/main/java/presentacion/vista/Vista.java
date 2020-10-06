@@ -2,22 +2,34 @@ package presentacion.vista;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.net.URL;
+import java.sql.Connection;
+import java.util.Date;
 import java.util.List;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
 import dto.PersonaDTO;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 import javax.swing.JButton;
-
 import persistencia.conexion.Conexion;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Vista
+
+@SuppressWarnings("serial")
+public class Vista extends JFrame
 {
 	private JFrame frame;
 	private JTable tablaPersonas;
@@ -25,8 +37,12 @@ public class Vista
 	private JButton btnBorrar;
 	private JButton btnReporte;
 	private DefaultTableModel modelPersonas;
-	private  String[] nombreColumnas = {"Nombre y apellido","Telefono"};
-
+	private  String[] nombreColumnas = {"Nombre y apellido","Telefono","Email","Linkedin","Cumpleaños","Calle","Altura","Piso","Depto","CP", "TipoContacto", "Localidad"};
+	private JButton btnActualizar;
+	private JButton btnAbmLocalidad;
+	private JButton btnAbmTipoContacto;
+	private JButton btnPrueba;
+	
 	public Vista() 
 	{
 		super();
@@ -37,23 +53,31 @@ public class Vista
 	private void initialize() 
 	{
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 850, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setTitle("Agenda 2020");
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 434, 262);
+		panel.setBounds(0, 0, 824, 350);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JScrollPane spPersonas = new JScrollPane();
-		spPersonas.setBounds(10, 11, 414, 182);
+		spPersonas.setBounds(10, 11, 804, 269);
 		panel.add(spPersonas);
 		
-		modelPersonas = new DefaultTableModel(null,nombreColumnas);
-		tablaPersonas = new JTable(modelPersonas);
+		modelPersonas = (new DefaultTableModel(null,nombreColumnas){//las celdas no se pueden editar
+
+		       @Override
+		       public boolean isCellEditable(int row, int column) {
+		          return false;
+		       }
+		});
 		
-		tablaPersonas.getColumnModel().getColumn(0).setPreferredWidth(103);
+		tablaPersonas = new JTable(modelPersonas);
+		tablaPersonas.getTableHeader().setReorderingAllowed(false) ;//NO MOVER COLUMNAS
+		tablaPersonas.getColumnModel().getColumn(0).setPreferredWidth(103);//para que esta?
 		tablaPersonas.getColumnModel().getColumn(0).setResizable(false);
 		tablaPersonas.getColumnModel().getColumn(1).setPreferredWidth(100);
 		tablaPersonas.getColumnModel().getColumn(1).setResizable(false);
@@ -61,20 +85,32 @@ public class Vista
 		spPersonas.setViewportView(tablaPersonas);
 		
 		btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(10, 228, 89, 23);
+		btnAgregar.setBounds(93, 291, 89, 23);
 		panel.add(btnAgregar);
 		
-		JButton btnEditar = new JButton("Editar");
-		btnEditar.setBounds(109, 228, 89, 23);
-		panel.add(btnEditar);
-		
 		btnBorrar = new JButton("Borrar");
-		btnBorrar.setBounds(208, 228, 89, 23);
+		btnBorrar.setBounds(457, 291, 89, 23);
 		panel.add(btnBorrar);
 		
 		btnReporte = new JButton("Reporte");
-		btnReporte.setBounds(307, 228, 89, 23);
+		btnReporte.setBounds(639, 291, 89, 23);
 		panel.add(btnReporte);
+		
+		btnActualizar = new JButton("actualizar");
+		btnActualizar.setBounds(275, 291, 89, 23);
+		panel.add(btnActualizar);
+
+		btnAbmLocalidad = new JButton("ABM Localidad");
+		btnAbmLocalidad.setBounds(193, 325, 122, 23);
+		panel.add(btnAbmLocalidad);
+		
+		btnAbmTipoContacto = new JButton("ABM Tipo contacto");
+		btnAbmTipoContacto.setBounds(508, 325, 122, 23);
+		panel.add(btnAbmTipoContacto);
+		
+		btnPrueba = new JButton("PRUEBA");
+		btnPrueba.setBounds(725, 325, 89, 23);
+		panel.add(btnPrueba);
 	}
 	
 	public void show()
@@ -101,7 +137,7 @@ public class Vista
 	{
 		return btnAgregar;
 	}
-
+	
 	public JButton getBtnBorrar() 
 	{
 		return btnBorrar;
@@ -110,6 +146,10 @@ public class Vista
 	public JButton getBtnReporte() 
 	{
 		return btnReporte;
+	}
+	public JButton getBtnActualizar()
+	{
+		return btnActualizar;
 	}
 	
 	public DefaultTableModel getModelPersonas() 
@@ -126,7 +166,14 @@ public class Vista
 	{
 		return nombreColumnas;
 	}
-
+	
+	public JButton getBtnABMLocalidad() {
+		return btnAbmLocalidad;
+	}
+	
+	public JButton getBtnABMTipoContacto() {
+		return btnAbmTipoContacto;
+	}
 
 	public void llenarTabla(List<PersonaDTO> personasEnTabla) {
 		this.getModelPersonas().setRowCount(0); //Para vaciar la tabla
@@ -135,11 +182,25 @@ public class Vista
 
 		for (PersonaDTO p : personasEnTabla)
 		{
+//			int id = p.getIdPersona();
 			String nombre = p.getNombre();
 			String tel = p.getTelefono();
-			Object[] fila = {nombre, tel};
+			String email = p.getEmail();
+			String linkedin = p.getLinkedin();
+			String calle = p.getCalle();
+			int altura = p.getAltura();
+			int piso = p.getPiso();
+			String depto = p.getDepto();
+			Date fecha = p.getFecha();
+			int cp = p.getCp();
+			String tipoContacto = p.getTipoContacto();
+			String localidad = p.getLocalidad();
+			Object[] fila = {nombre, tel, email, linkedin, fecha, calle, altura, piso, depto, cp, tipoContacto, localidad};
 			this.getModelPersonas().addRow(fila);
 		}
-		
+	}
+	
+	public JButton getBtnPrueba() {
+		return btnPrueba;
 	}
 }

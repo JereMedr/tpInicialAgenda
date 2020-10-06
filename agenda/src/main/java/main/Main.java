@@ -6,9 +6,8 @@ import presentacion.controlador.Controlador;
 import presentacion.vista.Vista;
 
 
-public class Main 
-{
-	//main
+public class Main {
+
 	public static void main(String[] args) 
 	{
 		Vista vista = new Vista();
