@@ -14,7 +14,7 @@ import dto.PersonaDTO;
 
 public class PersonaDAOSQL implements PersonaDAO
 {																							//Modificado acaaa!!!!
-	private static final String insert = "INSERT INTO personas(idPersona, Nombre, Telefono, Email, Linkedin, Fechacumple, Calle, Altura, Piso, Depto, CP) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String insert = "INSERT INTO personas(idPersona, Nombre, Telefono, Email, Linkedin, Fechacumple, Calle, Altura, Piso, Depto, CP, TipoContacto, Localidad) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM personas WHERE idPersona = ?";
 	private static final String readall = "SELECT * FROM personas";
 //	private static final String update = "UPDATE personas SET Nombre=?,Telefono=?,Email=?,Calle=?,Altura=?,Piso=?,Depto=? WHERE idPersona = ?";
@@ -30,10 +30,10 @@ public class PersonaDAOSQL implements PersonaDAO
 			statement.setInt(1, persona.getIdPersona());
 			statement.setString(2, persona.getNombre());
 			statement.setString(3, persona.getTelefono());
-			statement.setString(4, persona.getEmail()); //modificado
+			statement.setString(4, persona.getEmail()); 
 			statement.setString(5, persona.getLinkedin());
 
-			Date date = persona.getFecha();//necesario
+			Date date = persona.getFecha();
 			long d = date.getTime();
 			java.sql.Date fecha = new java.sql.Date(d);
 			
@@ -43,6 +43,8 @@ public class PersonaDAOSQL implements PersonaDAO
 			statement.setInt(9, persona.getPiso());
 			statement.setString(10, persona.getDepto());
 			statement.setInt(11, persona.getCp());
+			statement.setString(12, persona.getTipoContacto());
+			statement.setString(13, persona.getLocalidad());
 			
 			if(statement.executeUpdate() > 0)
 			{
@@ -113,7 +115,7 @@ public class PersonaDAOSQL implements PersonaDAO
 		int id = resultSet.getInt("idPersona");
 		String nombre = resultSet.getString("Nombre");
 		String tel = resultSet.getString("Telefono");
-		String email = resultSet.getString("Email"); //modificado
+		String email = resultSet.getString("Email");
 		Date fecha = resultSet.getDate("Fechacumple");
 		String calle = resultSet.getString("Calle");
 		int altura = resultSet.getInt("Altura");
@@ -121,7 +123,9 @@ public class PersonaDAOSQL implements PersonaDAO
 		String depto = resultSet.getString("Depto");
 		String linkedin = resultSet.getString("Linkedin");
 		int cp = resultSet.getInt("CP");
+		String tipoContacto = resultSet.getString("TipoContacto");
+		String localidad = resultSet.getString("Localidad");
 		
-		return new PersonaDTO(id, nombre, tel, email, linkedin, fecha, calle, altura, piso, depto, cp); //modificado
+		return new PersonaDTO(id, nombre, tel, email, linkedin, fecha, calle, altura, piso, depto, cp, tipoContacto, localidad);
 	}
 }

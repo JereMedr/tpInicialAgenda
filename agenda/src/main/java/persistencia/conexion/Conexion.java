@@ -16,7 +16,16 @@ public class Conexion
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver"); // comentario prueba branch no borrado
-			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/agenda?useSSL=false","root","root");
+			
+			String ip = ConfiguracionDB.getValue("dbIP");
+			String puerto = ConfiguracionDB.getValue("dbPuerto");
+			String nombreDB = ConfiguracionDB.getValue("dbName");
+			String usuario = ConfiguracionDB.getValue("dbUsuario");
+			String pass = ConfiguracionDB.getValue("dbContrasena");
+			
+			this.connection = DriverManager.getConnection("jdbc:mysql://"+ ip + ":" + puerto +"/" + nombreDB,usuario,pass);
+			
+//			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/agenda?useSSL=false","root","root");
 			this.connection.setAutoCommit(false);
 			log.info("Conexión exitosa");
 		}

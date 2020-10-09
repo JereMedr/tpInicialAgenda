@@ -1,22 +1,20 @@
 package presentacion.vista;
 
-import javax.swing.DefaultComboBoxModel;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
-
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 
-@SuppressWarnings({ "unchecked", "rawtypes"})
+@SuppressWarnings({ "rawtypes"})
 public class VentanaPersonaActualizar extends JDialog
 {
 	private static final long serialVersionUID = 1L;
@@ -191,14 +189,9 @@ public class VentanaPersonaActualizar extends JDialog
 		comboBoxDomicilioLocalidad.setBounds(106, 215, 158, 20);
 		panel.add(comboBoxDomicilioLocalidad);
 		
-		String[] Localidades = {"Avellaneda","San Miguel","Prueba"};//feo pero es lo que hay(?		
-		comboBoxDomicilioLocalidad.setModel(new DefaultComboBoxModel(Localidades));
-		
 		comboBoxTipoContacto = new JComboBox();
 		comboBoxTipoContacto.setBounds(106, 251, 135, 20);
 		panel.add(comboBoxTipoContacto);
-		String[] TipoContacto = {"Trabajo","Familia","Amigos"};//agregar alguno mas	
-		comboBoxTipoContacto.setModel(new DefaultComboBoxModel(TipoContacto));
 		
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(445, 35, 89, 23);

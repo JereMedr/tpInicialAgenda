@@ -2,9 +2,6 @@ package presentacion.vista;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.net.URL;
-import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JFrame;
@@ -14,18 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import dto.PersonaDTO;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 
 import javax.swing.JButton;
 import persistencia.conexion.Conexion;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 
 @SuppressWarnings("serial")
@@ -37,7 +25,7 @@ public class Vista extends JFrame
 	private JButton btnBorrar;
 	private JButton btnReporte;
 	private DefaultTableModel modelPersonas;
-	private  String[] nombreColumnas = {"Nombre y apellido","Telefono","Email","Linkedin","Cumpleaños","Calle","Altura","Piso","Depto","CP"};
+	private  String[] nombreColumnas = {"Nombre y apellido","Telefono","Email","Linkedin","Cumpleaños","Calle","Altura","Piso","Depto","CP", "TipoContacto", "Localidad"};
 	private JButton btnActualizar;
 	private JButton btnAbmLocalidad;
 	private JButton btnAbmTipoContacto;
@@ -52,18 +40,18 @@ public class Vista extends JFrame
 	private void initialize() 
 	{
 		frame = new JFrame();
-		frame.setBounds(100, 100, 750, 400);
+		frame.setBounds(100, 100, 850, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Agenda 2020");
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 724, 350);
+		panel.setBounds(0, 0, 824, 350);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JScrollPane spPersonas = new JScrollPane();
-		spPersonas.setBounds(10, 11, 704, 269);
+		spPersonas.setBounds(10, 11, 804, 269);
 		panel.add(spPersonas);
 		
 		modelPersonas = (new DefaultTableModel(null,nombreColumnas){//las celdas no se pueden editar
@@ -84,72 +72,27 @@ public class Vista extends JFrame
 		spPersonas.setViewportView(tablaPersonas);
 		
 		btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(73, 291, 89, 23);
+		btnAgregar.setBounds(114, 291, 122, 23);
 		panel.add(btnAgregar);
 		
 		btnBorrar = new JButton("Borrar");
-		btnBorrar.setBounds(397, 291, 89, 23);
+		btnBorrar.setBounds(586, 291, 122, 23);
 		panel.add(btnBorrar);
 		
 		btnReporte = new JButton("Reporte");
-		btnReporte.setBounds(559, 291, 89, 23);
+		btnReporte.setBounds(586, 325, 122, 23);
 		panel.add(btnReporte);
 		
 		btnActualizar = new JButton("actualizar");
-		btnActualizar.setBounds(235, 291, 89, 23);
+		btnActualizar.setBounds(350, 291, 122, 23);
 		panel.add(btnActualizar);
-		
-//		JButton btnMiReporte = new JButton("mi reporte");
-//		btnMiReporte.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				try {
-//				Connection conexion = Conexion.getConexion().getSQLConexion();
-//				JasperReport mireporte = null;
-//				String path = "C:\\Users\\Marco\\Desktop\\TPACAROMPER\\agenda\\reportes\\prueba.jasper";
-//				
-//				mireporte = (JasperReport) JRLoader.loadObjectFromFile(path);
-//				JasperPrint jprint = JasperFillManager.fillReport(mireporte,null,conexion);
-//				
-//				JasperViewer view = new JasperViewer(jprint,false);
-//				
-//				view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//				
-//				view.setVisible(true);
-				
-				
-	              
-//				URL in = this.getClass().getResource("/reportes/prueba.jasper");
-//				reporte= (JasperReport) JRLoader.loadObject(in);
-				
-			   
-//			   JasperReport reporte = null;
-//			   reporte = (JasperReport) JRLoader.loadObjectFromFile("reportes" + File.separator + "prueba.jrxml");               
-//               JasperPrint jprint = JasperFillManager.fillReport(reporte, null, conexion);
-               
-//               JasperCompileManager.compileReport("reportes/prueba.jrxml");
-               
-               
-//               JasperViewer view = new JasperViewer(jprint, false);
-//               
-//               view.setVisible(true);
-//				
-//				
-//				} catch (JRException e) {
-		
-//					e.printStackTrace();
-//				}
-//				
-//			}
-//		});
-//		btnMiReporte.setBounds(323, 325, 89, 23);
-//		panel.add(btnMiReporte);
-		
+
 		btnAbmLocalidad = new JButton("ABM Localidad");
-		btnAbmLocalidad.setBounds(153, 325, 122, 23);
+		btnAbmLocalidad.setBounds(114, 325, 122, 23);
 		panel.add(btnAbmLocalidad);
 		
 		btnAbmTipoContacto = new JButton("ABM Tipo contacto");
-		btnAbmTipoContacto.setBounds(372, 325, 122, 23);
+		btnAbmTipoContacto.setBounds(335, 325, 151, 23);
 		panel.add(btnAbmTipoContacto);
 	}
 	
@@ -215,6 +158,7 @@ public class Vista extends JFrame
 		return btnAbmTipoContacto;
 	}
 
+	
 	public void llenarTabla(List<PersonaDTO> personasEnTabla) {
 		this.getModelPersonas().setRowCount(0); //Para vaciar la tabla
 		this.getModelPersonas().setColumnCount(0);
@@ -233,8 +177,11 @@ public class Vista extends JFrame
 			String depto = p.getDepto();
 			Date fecha = p.getFecha();
 			int cp = p.getCp();
-			Object[] fila = {nombre, tel, email, linkedin, fecha, calle, altura, piso, depto, cp};
+			String tipoContacto = p.getTipoContacto();
+			String localidad = p.getLocalidad();
+			Object[] fila = {nombre, tel, email, linkedin, fecha, calle, altura, piso, depto, cp, tipoContacto, localidad};
 			this.getModelPersonas().addRow(fila);
 		}
 	}
+
 }

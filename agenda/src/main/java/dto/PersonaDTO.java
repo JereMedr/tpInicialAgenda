@@ -15,12 +15,11 @@ public class PersonaDTO
 	private String depto;
 	private Date fecha;
 	private int cp;
-	
-	
-//	private LocalidadDTO localidad ;
-//	private 
+	private String tipoContacto;
+	private String localidad ;
 
-	public PersonaDTO(int idPersona, String nombre, String telefono, String email, String linkedin, Date fecha, String calle,int altura,int piso, String depto, int cp)//modificado
+
+	public PersonaDTO(int idPersona, String nombre, String telefono, String email, String linkedin, Date fecha, String calle,int altura,int piso, String depto, int cp, String tipoContacto, String localidad)//modificado
 	{
 		this.idPersona = idPersona;
 		this.nombre = nombre;
@@ -33,6 +32,8 @@ public class PersonaDTO
 		this.setLinkedin(linkedin);
 		this.setFecha(fecha);
 		this.setCp(cp);
+		this.setTipoContacto(tipoContacto);
+		this.setLocalidad(localidad);
 	}
 	
 	public int getIdPersona() 
@@ -132,6 +133,22 @@ public class PersonaDTO
 
 	public void setCp(int cp) {
 		this.cp = cp;
+	}
+
+	public String getTipoContacto() {
+		return tipoContacto;
+	}
+
+	public void setTipoContacto(String tipoContacto) {
+		this.tipoContacto = tipoContacto;
+	}
+
+	public String getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
 	}
 	
 	

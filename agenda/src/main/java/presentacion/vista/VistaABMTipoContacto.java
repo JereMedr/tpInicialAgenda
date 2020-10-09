@@ -4,9 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -22,6 +20,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 
+@SuppressWarnings("serial")
 public class VistaABMTipoContacto extends JDialog {
 
 	private JPanel contentPane;
@@ -250,13 +249,14 @@ public class VistaABMTipoContacto extends JDialog {
 	}
 	
 	
+	@SuppressWarnings("rawtypes")
 	public void llenarTabla() {
 		
 			java.sql.PreparedStatement ps = null;
 			ResultSet rs = null;
 			Connection conexion = Conexion.getConexion().getSQLConexion();
 			
-			ArrayList<String> localidades = new ArrayList();
+			ArrayList<String> localidades = new ArrayList<String>();
 			
 			try {
 			String sql = "SELECT * FROM tipocontacto";

@@ -1,6 +1,5 @@
 package presentacion.vista;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,11 +9,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JComboBox;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
 
-@SuppressWarnings({ "unchecked", "rawtypes"})
+@SuppressWarnings({ "rawtypes"})
 public class VentanaPersona extends JFrame 
 {
 	private static final long serialVersionUID = 1L;
@@ -34,7 +36,7 @@ public class VentanaPersona extends JFrame
 	private JTextField txtLinkedin;
 	private JDateChooser fechaCumple;
 	private JTextField txtCP;
-	private JButton btnNewButton;
+//	private JButton btnNewButton;
 	
 	public static VentanaPersona getInstance()
 	{
@@ -148,6 +150,12 @@ public class VentanaPersona extends JFrame
 		panel.add(btnAgregarPersona);
 		
 		txtEmail = new JTextField();
+		txtEmail.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg2) {
+				habilitarbtnAgregar();
+			}
+		});
 		txtEmail.setBounds(127, 64, 164, 20);
 		panel.add(txtEmail);
 		txtEmail.setColumns(10);
@@ -159,6 +167,10 @@ public class VentanaPersona extends JFrame
 				char caracter = e.getKeyChar();
 				if(!Character.isLetter(caracter) && caracter!=KeyEvent.VK_SPACE)
 					e.consume();	
+			}
+			@Override
+			public void keyReleased(KeyEvent arg6) {
+				habilitarbtnAgregar();
 			}
 		});
 		txtDomicilioCalle.setBounds(57, 144, 143, 20);
@@ -173,6 +185,10 @@ public class VentanaPersona extends JFrame
 				if(cadena<'0'||cadena>'9')
 					e.consume();
 			}
+			@Override
+			public void keyReleased(KeyEvent arg5) {
+				habilitarbtnAgregar();
+			}
 		});
 		txtDomicilioAltura.setBounds(301, 144, 86, 20);
 		panel.add(txtDomicilioAltura);
@@ -186,12 +202,22 @@ public class VentanaPersona extends JFrame
 				if(cadena<'0'||cadena>'9')
 					e.consume();
 			}
+			@Override
+			public void keyReleased(KeyEvent arg4) {
+				habilitarbtnAgregar();
+			}
 		});
 		txtDomicilioPiso.setBounds(54, 175, 40, 20);
 		panel.add(txtDomicilioPiso);
 		txtDomicilioPiso.setColumns(10);
 		
 		txtDomicilioDepto = new JTextField();
+		txtDomicilioDepto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg3) {
+				habilitarbtnAgregar();
+			}
+		});
 		txtDomicilioDepto.setBounds(211, 175, 40, 20);
 		panel.add(txtDomicilioDepto);
 		txtDomicilioDepto.setColumns(10);
@@ -200,23 +226,21 @@ public class VentanaPersona extends JFrame
 		comboBoxDomicilioLocalidad.setBounds(106, 215, 158, 20);
 		panel.add(comboBoxDomicilioLocalidad);
 		
-		//aca retorno el combobox
-		
-//		String[] Localidades = {"Avellaneda","San Miguel","Prueba"};//feo pero es lo que hay(?		
-//		comboBoxDomicilioLocalidad.setModel(new DefaultComboBoxModel(Localidades));
-		
 		comboBoxTipoContacto = new JComboBox();
 		comboBoxTipoContacto.setBounds(106, 251, 135, 20);
 		panel.add(comboBoxTipoContacto);
-		
-//		String[] TipoContacto = {"Trabajo","Familia","Amigos"};//agregar alguno mas	
-//		comboBoxTipoContacto.setModel(new DefaultComboBoxModel(TipoContacto));
 		
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(445, 35, 89, 23);
 		panel.add(btnCancelar);
 		
 		txtLinkedin = new JTextField();
+		txtLinkedin.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg2) {
+				habilitarbtnAgregar();
+			}
+		});
 		txtLinkedin.setBounds(127, 95, 164, 20);
 		panel.add(txtLinkedin);
 		txtLinkedin.setColumns(10);
@@ -226,6 +250,12 @@ public class VentanaPersona extends JFrame
 		panel.add(lblLinkedin);
 		
 		fechaCumple = new JDateChooser();
+		fechaCumple.addPropertyChangeListener(new PropertyChangeListener(){ 
+        public void propertyChange(PropertyChangeEvent e) {
+
+			habilitarbtnAgregar();
+        }
+});
 		fechaCumple.setDateFormatString("dd/MM/yyyy");//cambiar el formato para guardalo en la base
 		JTextFieldDateEditor editor = (JTextFieldDateEditor) fechaCumple.getDateEditor();
 		editor.setEditable(false);
@@ -237,6 +267,12 @@ public class VentanaPersona extends JFrame
 		panel.add(label);
 		
 		txtCP = new JTextField();
+		txtCP.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg7) {
+				habilitarbtnAgregar();
+			}
+		});
 		txtCP.setBounds(322, 175, 86, 20);
 		panel.add(txtCP);
 		txtCP.setColumns(10);
@@ -245,7 +281,10 @@ public class VentanaPersona extends JFrame
 	}
 
 	protected void habilitarbtnAgregar() {
-		if(!txtNombre.getText().isEmpty() && !txtTelefono.getText().isEmpty()) {
+		if(!txtNombre.getText().isEmpty() && !txtTelefono.getText().isEmpty() && !txtEmail.getText().isEmpty() && !txtLinkedin.getText().isEmpty()
+			&& !txtDomicilioCalle.getText().isEmpty() && !txtDomicilioAltura.getText().isEmpty() && !txtDomicilioPiso.getText().isEmpty() 
+			&& !txtDomicilioDepto.getText().isEmpty() && !txtCP.getText().isEmpty() && !(fechaCumple.getDate()==null)) {
+			
 			btnAgregarPersona.setEnabled(true);
 		}
 		else {
