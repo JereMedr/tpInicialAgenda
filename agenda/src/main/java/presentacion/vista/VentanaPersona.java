@@ -241,14 +241,6 @@ public class VentanaPersona extends JFrame
 		panel.add(txtCP);
 		txtCP.setColumns(10);
 		
-		JButton btnNuevaLocalidad = new JButton("nueva localidad");
-		btnNuevaLocalidad.setBounds(298, 214, 149, 23);
-		panel.add(btnNuevaLocalidad);
-		
-		JButton btnNewButton = new JButton("nuevo tipo contacto");
-		btnNewButton.setBounds(301, 248, 146, 23);
-		panel.add(btnNewButton);
-		
 		this.setVisible(false);
 	}
 
